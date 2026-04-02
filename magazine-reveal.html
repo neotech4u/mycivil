@@ -3,18 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Magazine Reveal | Civil Engineering Department</title>
+  <title>Grand Magazine Reveal | Civil Engineering Department</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --night: #081a2f;
-      --deep-blue: #0f2c56;
-      --gold: #f3cf7a;
-      --glow: #7ad5ff;
-      --paper: #f4efe3;
-      --red: #9d2e2e;
+      --bg-1: #050b19;
+      --bg-2: #0a1e3f;
+      --cyan: #7fdfff;
+      --gold: #f5d180;
+      --wrap-red: #b42033;
+      --wrap-red-dark: #7d1320;
+      --paper: #f3efe6;
+      --paper-edge: #d8cdb7;
+      --text: #eaf2ff;
     }
 
     * { box-sizing: border-box; }
@@ -23,322 +26,466 @@
       margin: 0;
       min-height: 100vh;
       font-family: 'Inter', sans-serif;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(122, 213, 255, 0.15), transparent 45%),
-        radial-gradient(circle at 80% 10%, rgba(243, 207, 122, 0.08), transparent 40%),
-        linear-gradient(160deg, #040d1a 0%, var(--night) 50%, #03142a 100%);
-      color: #fff;
+      color: var(--text);
       display: grid;
       place-items: center;
       overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(127, 223, 255, 0.22), transparent 40%),
+        radial-gradient(circle at 82% 18%, rgba(245, 209, 128, 0.12), transparent 45%),
+        linear-gradient(170deg, var(--bg-1), var(--bg-2) 60%, #051327);
     }
 
-    .sparkles,
-    .sparkles::before,
-    .sparkles::after {
+    .aurora,
+    .aurora::before,
+    .aurora::after {
+      content: "";
+      position: fixed;
+      inset: -10%;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 40%, rgba(127, 223, 255, 0.2), transparent 45%),
+        radial-gradient(circle at 70% 30%, rgba(160, 133, 255, 0.18), transparent 35%),
+        radial-gradient(circle at 60% 75%, rgba(245, 209, 128, 0.16), transparent 45%);
+      filter: blur(30px);
+      animation: drift 18s linear infinite;
+    }
+
+    .aurora::before { animation-duration: 23s; opacity: 0.7; }
+    .aurora::after { animation-duration: 27s; opacity: 0.45; }
+
+    @keyframes drift {
+      from { transform: translate3d(0, 0, 0) scale(1.02); }
+      to { transform: translate3d(0, -35px, 0) scale(1.08); }
+    }
+
+    .stars {
       position: fixed;
       inset: 0;
-      content: "";
       pointer-events: none;
       background-image:
-        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(2px 2px at 70% 50%, rgba(255,255,255,0.45), transparent),
-        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.7), transparent),
-        radial-gradient(2px 2px at 80% 30%, rgba(122,213,255,0.7), transparent);
-      animation: shimmer 10s linear infinite;
+        radial-gradient(2px 2px at 12% 25%, rgba(255, 255, 255, 0.72), transparent),
+        radial-gradient(1px 1px at 74% 38%, rgba(255, 255, 255, 0.82), transparent),
+        radial-gradient(1px 1px at 42% 70%, rgba(255, 255, 255, 0.65), transparent),
+        radial-gradient(2px 2px at 86% 17%, rgba(127, 223, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 25% 90%, rgba(255, 255, 255, 0.7), transparent);
+      animation: twinkle 7s ease-in-out infinite alternate;
     }
 
-    .sparkles::before { animation-duration: 15s; opacity: 0.5; }
-    .sparkles::after { animation-duration: 20s; opacity: 0.35; }
-
-    @keyframes shimmer {
-      from { transform: translateY(0); }
-      to { transform: translateY(-40px); }
+    @keyframes twinkle {
+      from { opacity: 0.4; }
+      to { opacity: 0.85; }
     }
 
     .stage {
-      width: min(920px, 94vw);
+      width: min(980px, 95vw);
       text-align: center;
+      z-index: 5;
       position: relative;
-      z-index: 2;
     }
 
     h1 {
+      margin: 0;
       font-family: 'Cinzel', serif;
+      font-size: clamp(1.5rem, 3vw, 2.3rem);
       letter-spacing: 0.08em;
-      margin: 0 0 10px;
-      font-size: clamp(1.4rem, 2.4vw, 2rem);
-      color: #f3f7ff;
     }
 
-    p.subtitle {
-      margin: 0 0 28px;
-      color: #c7d6ef;
-      font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    .subtitle {
+      margin: 10px 0 26px;
+      color: #c6d8fa;
+      font-size: clamp(0.9rem, 1.9vw, 1.1rem);
     }
 
-    .book-wrap {
-      perspective: 1400px;
-      width: min(760px, 92vw);
+    .scene {
+      width: min(820px, 93vw);
       margin: 0 auto;
+      perspective: 1800px;
       position: relative;
+      padding: 18px;
     }
 
-    .book {
-      position: relative;
+    .altar-glow {
+      position: absolute;
+      inset: 8% 4% 2%;
+      background: radial-gradient(circle, rgba(127,223,255,0.35), rgba(127,223,255,0) 62%);
+      filter: blur(20px);
+      opacity: 0.65;
+      pointer-events: none;
+      transition: opacity 700ms ease;
+    }
+
+    .gift {
       width: 100%;
       aspect-ratio: 16 / 10;
-      border-radius: 18px;
+      position: relative;
       transform-style: preserve-3d;
-      box-shadow: 0 35px 60px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.1);
-      background: linear-gradient(160deg, #0f1f3b, #122f58 70%, #234a7f);
+      border-radius: 26px;
       overflow: hidden;
+      box-shadow: 0 45px 80px rgba(0,0,0,0.56), inset 0 0 0 1px rgba(255,255,255,0.14);
+      background: linear-gradient(150deg, #0c1f3f, #143f75 72%, #0f2f55);
+      transition: transform 900ms cubic-bezier(.2,.75,.2,1), box-shadow 900ms ease;
     }
 
-    .book::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, rgba(255,255,255,0.12), transparent 45%, rgba(255,255,255,0.08));
-      pointer-events: none;
+    .gift.revealed {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 0 70px rgba(127,223,255,0.5), 0 50px 90px rgba(0,0,0,0.66);
     }
 
-    .book-title {
+    .cover {
       position: absolute;
       inset: 0;
       display: grid;
       place-items: center;
-      font-family: 'Cinzel', serif;
+      padding: 26px;
+      transform: translateZ(25px);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 700;
-      line-height: 1.4;
-      color: #eef6ff;
-      text-shadow: 0 5px 12px rgba(0,0,0,0.4);
-      padding: 20px;
-      transform: translateZ(20px);
+      letter-spacing: 0.1em;
+      background:
+        linear-gradient(140deg, rgba(255,255,255,0.1), rgba(255,255,255,0) 45%),
+        radial-gradient(circle at 80% 12%, rgba(127,223,255,0.25), transparent 45%);
     }
 
-    .book-title span {
-      display: block;
-      font-size: clamp(0.9rem, 2vw, 1.4rem);
-      color: #d7e6ff;
+    .cover-card {
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 18px;
+      width: min(540px, 92%);
+      padding: 28px 24px;
+      background: linear-gradient(155deg, rgba(7,17,36,0.58), rgba(23,62,102,0.52));
+      backdrop-filter: blur(3px);
+      box-shadow: 0 20px 35px rgba(0,0,0,0.35);
     }
 
-    .book-title strong {
+    .cover small { font-size: 0.9rem; color: #cbdcf9; }
+    .cover strong {
       display: block;
-      font-size: clamp(1.3rem, 3.8vw, 2.8rem);
-      color: #ffffff;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.3rem, 4vw, 2.9rem);
       margin: 8px 0;
+      color: #fff;
+      text-shadow: 0 8px 18px rgba(0,0,0,0.35);
     }
 
-    .ribbons {
+    .ribbon-v,
+    .ribbon-h {
       position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 8;
+      background: linear-gradient(180deg, #d54257, var(--wrap-red) 60%, var(--wrap-red-dark));
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.2), 0 12px 26px rgba(0,0,0,0.4);
+      z-index: 11;
+      transition: transform 1s cubic-bezier(.2,.7,.2,1), opacity 800ms ease;
     }
 
-    .ribbon {
+    .ribbon-v { width: 30px; height: 100%; top: 0; left: calc(50% - 15px); }
+    .ribbon-h { height: 30px; width: 100%; left: 0; top: calc(50% - 15px); }
+
+    .paper {
       position: absolute;
-      background: linear-gradient(180deg, #d24d4d 0%, var(--red) 65%, #7a2020 100%);
-      box-shadow: inset 0 0 8px rgba(255,255,255,0.2), 0 12px 22px rgba(0,0,0,0.45);
-      transition: transform 900ms cubic-bezier(.2,.75,.2,1), opacity 700ms ease;
+      z-index: 10;
+      background: linear-gradient(150deg, var(--paper), #ece1cb 58%, var(--paper-edge));
+      box-shadow: inset 0 0 0 1px rgba(118,90,42,0.15);
+      transition: transform 1200ms cubic-bezier(.18,.8,.2,1), opacity 700ms ease;
     }
 
-    .ribbon.v1 { width: 26px; height: 100%; left: 24%; top: 0; }
-    .ribbon.v2 { width: 26px; height: 100%; left: 62%; top: 0; }
-    .ribbon.h1 { height: 26px; width: 100%; top: 28%; left: 0; }
-    .ribbon.h2 { height: 26px; width: 100%; top: 62%; left: 0; }
+    .paper.top {
+      left: 0; top: 0; width: 100%; height: 50%;
+      transform-origin: top center;
+      clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+    }
+    .paper.bottom {
+      left: 0; bottom: 0; width: 100%; height: 50%;
+      transform-origin: bottom center;
+      clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
+    }
+    .paper.left {
+      left: 0; top: 0; width: 50%; height: 100%;
+      transform-origin: left center;
+      clip-path: polygon(0 0, 100% 15%, 100% 85%, 0 100%);
+    }
+    .paper.right {
+      right: 0; top: 0; width: 50%; height: 100%;
+      transform-origin: right center;
+      clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 85%);
+    }
 
-    .seal {
+    .knot {
       position: absolute;
-      width: 110px;
-      height: 110px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 35% 35%, #ffe9ba, var(--gold) 45%, #b5862b 100%);
-      box-shadow: 0 16px 24px rgba(0,0,0,0.55), inset 0 0 0 2px rgba(255,255,255,0.3);
-      display: grid;
-      place-items: center;
+      width: 124px;
+      height: 124px;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 0.72rem;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      color: #5a3a00;
-      text-align: center;
-      pointer-events: auto;
+      z-index: 14;
       cursor: pointer;
-      transition: transform 250ms ease, box-shadow 300ms ease;
-      user-select: none;
-      z-index: 9;
+      border: none;
+      background: none;
+      padding: 0;
     }
 
-    .seal:hover {
-      transform: translate(-50%, -52%) scale(1.03);
-      box-shadow: 0 18px 30px rgba(0,0,0,0.6), 0 0 30px rgba(243, 207, 122, 0.45);
-    }
-
-    .seal::after {
-      content: 'Click to untie';
+    .knot-center {
       position: absolute;
-      bottom: -30px;
-      font-family: Inter, sans-serif;
-      font-size: 0.75rem;
-      color: #d6e3ff;
+      inset: 30% 30%;
+      border-radius: 999px;
+      background: radial-gradient(circle at 35% 35%, #fff0c6, var(--gold) 42%, #b7862f);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.55), inset 0 0 0 2px rgba(255,255,255,0.35);
+    }
+
+    .loop {
+      position: absolute;
+      width: 56px;
+      height: 36px;
+      border: 11px solid #cb3448;
+      border-radius: 50%;
+      top: 36%;
+      transition: transform 700ms cubic-bezier(.2,.7,.2,1), opacity 700ms ease;
+      box-shadow: inset 0 0 7px rgba(255,255,255,0.2);
+      background: rgba(180, 32, 51, 0.3);
+    }
+
+    .loop.left { left: 7px; transform-origin: right center; }
+    .loop.right { right: 7px; transform-origin: left center; }
+
+    .knot::after {
+      content: 'Click to unwrap';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -26px;
+      font-size: 0.78rem;
+      color: #dae8ff;
+      letter-spacing: 0.05em;
+      font-weight: 700;
       white-space: nowrap;
-      letter-spacing: 0.04em;
-      font-weight: 600;
+      text-shadow: 0 3px 8px rgba(0,0,0,0.35);
     }
 
-    .reveal-glow {
-      position: absolute;
-      inset: -20%;
-      border-radius: 24px;
-      background: radial-gradient(circle, rgba(122, 213, 255, 0.32) 0%, rgba(122, 213, 255, 0) 65%);
+    .gift.stage-1 .loop.left  { transform: translateX(-26px) rotate(-22deg) scale(0.88); }
+    .gift.stage-1 .loop.right { transform: translateX(26px) rotate(22deg) scale(0.88); }
+
+    .gift.stage-2 .ribbon-v { transform: translateY(-130%) scaleY(0.65); opacity: 0; }
+    .gift.stage-3 .ribbon-h { transform: translateX(130%) scaleX(0.65); opacity: 0; }
+
+    .gift.stage-4 .paper.top    { transform: rotateX(-140deg) translateY(-30px); opacity: 0.18; }
+    .gift.stage-4 .paper.bottom { transform: rotateX(140deg) translateY(30px); opacity: 0.18; }
+    .gift.stage-4 .paper.left   { transform: rotateY(140deg) translateX(-20px); opacity: 0.24; }
+    .gift.stage-4 .paper.right  { transform: rotateY(-140deg) translateX(20px); opacity: 0.24; }
+
+    .gift.stage-5 .knot {
+      transform: translate(-50%, -20%) scale(0.4);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 500ms ease;
-      z-index: 3;
+      transition: transform 700ms ease, opacity 700ms ease;
     }
 
-    .book.opening {
-      animation: grand-open 2200ms cubic-bezier(.18,.7,.2,1) forwards;
+    .gift.stage-5 .paper,
+    .gift.stage-5 .ribbon-h,
+    .gift.stage-5 .ribbon-v {
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .book.opening + .reveal-glow {
-      opacity: 1;
+    .magic-flash {
+      position: absolute;
+      inset: -16%;
+      border-radius: 30px;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255,255,255,0.75) 0%, rgba(127,223,255,0.55) 35%, transparent 72%);
+      opacity: 0;
+      transform: scale(0.75);
+      z-index: 20;
     }
 
-    @keyframes grand-open {
-      0%   { transform: rotateX(0) scale(1); }
-      24%  { transform: rotateX(14deg) scale(1.02); }
-      48%  { transform: rotateX(-6deg) scale(1.03); }
-      72%  { transform: rotateX(4deg) scale(1.06); }
-      100% { transform: rotateX(0) scale(1.04); box-shadow: 0 0 70px rgba(122, 213, 255, 0.5); }
+    .magic-flash.fire {
+      animation: flash 1400ms ease forwards;
+    }
+
+    @keyframes flash {
+      0% { opacity: 0; transform: scale(0.75); }
+      18% { opacity: 1; transform: scale(1.05); }
+      45% { opacity: 0.8; transform: scale(1.2); }
+      100% { opacity: 0; transform: scale(1.35); }
+    }
+
+    .particles {
+      position: absolute;
+      inset: 0;
+      z-index: 30;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #fff;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      animation: burst 1300ms ease-out forwards;
+    }
+
+    @keyframes burst {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+      10% { opacity: 1; }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.3);
+      }
     }
 
     .status {
       margin-top: 26px;
-      color: #d8e4ff;
-      font-weight: 600;
-      letter-spacing: 0.04em;
       min-height: 1.4em;
+      font-weight: 700;
+      color: #d7e6ff;
+      letter-spacing: 0.04em;
     }
 
     .redirect {
-      font-size: 0.9rem;
+      margin-top: 8px;
+      color: #9eddff;
       opacity: 0;
       transform: translateY(8px);
-      transition: all 500ms ease;
-      color: #9fd4ff;
-      margin-top: 10px;
+      transition: 500ms ease;
+      font-size: 0.95rem;
     }
 
-    .redirect.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .redirect.show { opacity: 1; transform: translateY(0); }
 
-    .ribbon.gone.v1 { transform: translateX(-160%) rotate(-18deg); opacity: 0; }
-    .ribbon.gone.v2 { transform: translateX(160%) rotate(18deg); opacity: 0; }
-    .ribbon.gone.h1 { transform: translateY(-160%) rotate(-10deg); opacity: 0; }
-    .ribbon.gone.h2 { transform: translateY(160%) rotate(10deg); opacity: 0; }
-
-    .seal.fade {
-      opacity: 0;
-      transform: translate(-50%, -45%) scale(0.7);
-      pointer-events: none;
+    @media (max-width: 700px) {
+      .knot { width: 104px; height: 104px; }
+      .loop { width: 48px; height: 30px; border-width: 9px; }
+      .ribbon-v { width: 24px; left: calc(50% - 12px); }
+      .ribbon-h { height: 24px; top: calc(50% - 12px); }
     }
   </style>
 </head>
 <body>
-  <div class="sparkles"></div>
+  <div class="aurora"></div>
+  <div class="stars"></div>
 
   <main class="stage">
     <h1>Civil Engineering Department Magazine Reveal</h1>
-    <p class="subtitle">Untie each ribbon knot to unlock the grand reveal.</p>
+    <p class="subtitle">A ceremonial gift-unwrapping experience before opening the magazine.</p>
 
-    <section class="book-wrap" aria-label="Magazine reveal animation">
-      <div id="book" class="book">
-        <div class="book-title">
-          <div>
-            <span>Department of Civil Engineering</span>
+    <section class="scene" aria-label="Gift unwrapping reveal animation">
+      <div class="altar-glow" id="altarGlow"></div>
+      <div class="gift" id="gift">
+        <div class="cover">
+          <div class="cover-card">
+            <small>Department of Civil Engineering</small>
             <strong>Constructing Excellence</strong>
-            <span>Annual Magazine 2026</span>
+            <small>Magazine Edition 2026</small>
           </div>
         </div>
 
-        <div class="ribbons" id="ribbons">
-          <div class="ribbon v1" data-step="0"></div>
-          <div class="ribbon h1" data-step="1"></div>
-          <div class="ribbon v2" data-step="2"></div>
-          <div class="ribbon h2" data-step="3"></div>
-        </div>
+        <div class="paper top"></div>
+        <div class="paper right"></div>
+        <div class="paper bottom"></div>
+        <div class="paper left"></div>
 
-        <button id="seal" class="seal" aria-label="Untie ribbon">
-          MAGAZINE<br/>REVEAL
+        <div class="ribbon-v"></div>
+        <div class="ribbon-h"></div>
+
+        <button class="knot" id="knot" aria-label="Unwrap gift">
+          <span class="loop left"></span>
+          <span class="loop right"></span>
+          <span class="knot-center"></span>
         </button>
+
+        <div class="magic-flash" id="magicFlash"></div>
+        <div class="particles" id="particles"></div>
       </div>
-      <div class="reveal-glow"></div>
     </section>
 
-    <div id="status" class="status">Click the golden seal to untie ribbon 1 of 4.</div>
-    <div id="redirect" class="redirect"></div>
+    <div class="status" id="status">Tap the knot to begin unwrapping (Step 1 of 5).</div>
+    <div class="redirect" id="redirect"></div>
   </main>
 
   <script>
-    const ribbons = Array.from(document.querySelectorAll('.ribbon'));
-    const seal = document.getElementById('seal');
-    const statusText = document.getElementById('status');
-    const redirectText = document.getElementById('redirect');
-    const book = document.getElementById('book');
+    const gift = document.getElementById('gift');
+    const knot = document.getElementById('knot');
+    const statusEl = document.getElementById('status');
+    const redirectEl = document.getElementById('redirect');
+    const magicFlash = document.getElementById('magicFlash');
+    const particlesEl = document.getElementById('particles');
+    const altarGlow = document.getElementById('altarGlow');
 
-    const redirectUrl = 'https://example.com/magazine'; // Replace with your final magazine page URL
+    const steps = [
+      'Bow loosened...',
+      'Vertical ribbon released...',
+      'Horizontal ribbon released...',
+      'Wrapping flaps unfolding...',
+      '✨ Grand reveal complete!'
+    ];
 
+    const redirectUrl = 'https://example.com/magazine'; // Replace with your actual magazine page URL.
+    const totalSteps = 5;
     let step = 0;
-    let redirectCountdown = 5;
+    let countdown = 6;
 
-    function updateStatus() {
-      const remaining = ribbons.length - step;
-      if (remaining > 0) {
-        statusText.textContent = `Click the golden seal to untie ribbon ${step + 1} of ${ribbons.length}.`;
+    function emitParticles(count = 22) {
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle';
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 70 + Math.random() * 280;
+        const dx = Math.cos(angle) * radius;
+        const dy = Math.sin(angle) * radius;
+        const colors = ['#ffffff', '#9be6ff', '#f5d180', '#c9b8ff'];
+        p.style.left = '50%';
+        p.style.top = '50%';
+        p.style.setProperty('--dx', `${dx}px`);
+        p.style.setProperty('--dy', `${dy}px`);
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.width = `${4 + Math.random() * 7}px`;
+        p.style.height = p.style.width;
+        particlesEl.appendChild(p);
+        setTimeout(() => p.remove(), 1400);
       }
     }
 
-    function startRedirectCountdown() {
-      redirectText.classList.add('show');
-      redirectText.textContent = `Grand reveal complete! Redirecting to magazine in ${redirectCountdown}s...`;
+    function updateStatus() {
+      if (step < totalSteps) {
+        statusEl.textContent = `${steps[step - 1]} Click again (Step ${step + 1} of ${totalSteps}).`;
+      }
+    }
+
+    function launchFinale() {
+      magicFlash.classList.remove('fire');
+      void magicFlash.offsetWidth;
+      magicFlash.classList.add('fire');
+      gift.classList.add('revealed');
+      altarGlow.style.opacity = '1';
+      emitParticles(42);
+      redirectEl.classList.add('show');
+      redirectEl.textContent = `Redirecting to full magazine in ${countdown}s...`;
 
       const timer = setInterval(() => {
-        redirectCountdown -= 1;
-        if (redirectCountdown <= 0) {
+        countdown -= 1;
+        if (countdown <= 0) {
           clearInterval(timer);
           window.location.href = redirectUrl;
           return;
         }
-        redirectText.textContent = `Grand reveal complete! Redirecting to magazine in ${redirectCountdown}s...`;
+        redirectEl.textContent = `Redirecting to full magazine in ${countdown}s...`;
       }, 1000);
     }
 
-    seal.addEventListener('click', () => {
-      if (step < ribbons.length) {
-        ribbons[step].classList.add('gone');
-        step += 1;
+    knot.addEventListener('click', () => {
+      if (step >= totalSteps) return;
+
+      step += 1;
+      gift.classList.add(`stage-${step}`);
+
+      emitParticles(step < totalSteps ? 14 : 30);
+
+      if (step < totalSteps) {
         updateStatus();
-      }
-
-      if (step === ribbons.length) {
-        seal.classList.add('fade');
-        statusText.textContent = '✨ The magic cover opens...';
-        book.classList.add('opening');
-        seal.disabled = true;
-
-        setTimeout(() => {
-          statusText.textContent = 'Magazine cover revealed.';
-          startRedirectCountdown();
-        }, 1700);
+      } else {
+        statusEl.textContent = '✨ The cover is now revealed in full glory.';
+        knot.disabled = true;
+        setTimeout(launchFinale, 500);
       }
     });
   </script>

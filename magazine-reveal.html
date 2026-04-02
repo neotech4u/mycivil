@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magazine Reveal | Civil Engineering Department</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --night: #081a2f;
+      --deep-blue: #0f2c56;
+      --gold: #f3cf7a;
+      --glow: #7ad5ff;
+      --paper: #f4efe3;
+      --red: #9d2e2e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(122, 213, 255, 0.15), transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(243, 207, 122, 0.08), transparent 40%),
+        linear-gradient(160deg, #040d1a 0%, var(--night) 50%, #03142a 100%);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .sparkles,
+    .sparkles::before,
+    .sparkles::after {
+      position: fixed;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 70% 50%, rgba(255,255,255,0.45), transparent),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(2px 2px at 80% 30%, rgba(122,213,255,0.7), transparent);
+      animation: shimmer 10s linear infinite;
+    }
+
+    .sparkles::before { animation-duration: 15s; opacity: 0.5; }
+    .sparkles::after { animation-duration: 20s; opacity: 0.35; }
+
+    @keyframes shimmer {
+      from { transform: translateY(0); }
+      to { transform: translateY(-40px); }
+    }
+
+    .stage {
+      width: min(920px, 94vw);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.08em;
+      margin: 0 0 10px;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      color: #f3f7ff;
+    }
+
+    p.subtitle {
+      margin: 0 0 28px;
+      color: #c7d6ef;
+      font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    }
+
+    .book-wrap {
+      perspective: 1400px;
+      width: min(760px, 92vw);
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .book {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 18px;
+      transform-style: preserve-3d;
+      box-shadow: 0 35px 60px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.1);
+      background: linear-gradient(160deg, #0f1f3b, #122f58 70%, #234a7f);
+      overflow: hidden;
+    }
+
+    .book::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255,255,255,0.12), transparent 45%, rgba(255,255,255,0.08));
+      pointer-events: none;
+    }
+
+    .book-title {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: 'Cinzel', serif;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #eef6ff;
+      text-shadow: 0 5px 12px rgba(0,0,0,0.4);
+      padding: 20px;
+      transform: translateZ(20px);
+    }
+
+    .book-title span {
+      display: block;
+      font-size: clamp(0.9rem, 2vw, 1.4rem);
+      color: #d7e6ff;
+    }
+
+    .book-title strong {
+      display: block;
+      font-size: clamp(1.3rem, 3.8vw, 2.8rem);
+      color: #ffffff;
+      margin: 8px 0;
+    }
+
+    .ribbons {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 8;
+    }
+
+    .ribbon {
+      position: absolute;
+      background: linear-gradient(180deg, #d24d4d 0%, var(--red) 65%, #7a2020 100%);
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.2), 0 12px 22px rgba(0,0,0,0.45);
+      transition: transform 900ms cubic-bezier(.2,.75,.2,1), opacity 700ms ease;
+    }
+
+    .ribbon.v1 { width: 26px; height: 100%; left: 24%; top: 0; }
+    .ribbon.v2 { width: 26px; height: 100%; left: 62%; top: 0; }
+    .ribbon.h1 { height: 26px; width: 100%; top: 28%; left: 0; }
+    .ribbon.h2 { height: 26px; width: 100%; top: 62%; left: 0; }
+
+    .seal {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 35% 35%, #ffe9ba, var(--gold) 45%, #b5862b 100%);
+      box-shadow: 0 16px 24px rgba(0,0,0,0.55), inset 0 0 0 2px rgba(255,255,255,0.3);
+      display: grid;
+      place-items: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: #5a3a00;
+      text-align: center;
+      pointer-events: auto;
+      cursor: pointer;
+      transition: transform 250ms ease, box-shadow 300ms ease;
+      user-select: none;
+      z-index: 9;
+    }
+
+    .seal:hover {
+      transform: translate(-50%, -52%) scale(1.03);
+      box-shadow: 0 18px 30px rgba(0,0,0,0.6), 0 0 30px rgba(243, 207, 122, 0.45);
+    }
+
+    .seal::after {
+      content: 'Click to untie';
+      position: absolute;
+      bottom: -30px;
+      font-family: Inter, sans-serif;
+      font-size: 0.75rem;
+      color: #d6e3ff;
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    .reveal-glow {
+      position: absolute;
+      inset: -20%;
+      border-radius: 24px;
+      background: radial-gradient(circle, rgba(122, 213, 255, 0.32) 0%, rgba(122, 213, 255, 0) 65%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 500ms ease;
+      z-index: 3;
+    }
+
+    .book.opening {
+      animation: grand-open 2200ms cubic-bezier(.18,.7,.2,1) forwards;
+    }
+
+    .book.opening + .reveal-glow {
+      opacity: 1;
+    }
+
+    @keyframes grand-open {
+      0%   { transform: rotateX(0) scale(1); }
+      24%  { transform: rotateX(14deg) scale(1.02); }
+      48%  { transform: rotateX(-6deg) scale(1.03); }
+      72%  { transform: rotateX(4deg) scale(1.06); }
+      100% { transform: rotateX(0) scale(1.04); box-shadow: 0 0 70px rgba(122, 213, 255, 0.5); }
+    }
+
+    .status {
+      margin-top: 26px;
+      color: #d8e4ff;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      min-height: 1.4em;
+    }
+
+    .redirect {
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 500ms ease;
+      color: #9fd4ff;
+      margin-top: 10px;
+    }
+
+    .redirect.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ribbon.gone.v1 { transform: translateX(-160%) rotate(-18deg); opacity: 0; }
+    .ribbon.gone.v2 { transform: translateX(160%) rotate(18deg); opacity: 0; }
+    .ribbon.gone.h1 { transform: translateY(-160%) rotate(-10deg); opacity: 0; }
+    .ribbon.gone.h2 { transform: translateY(160%) rotate(10deg); opacity: 0; }
+
+    .seal.fade {
+      opacity: 0;
+      transform: translate(-50%, -45%) scale(0.7);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkles"></div>
+
+  <main class="stage">
+    <h1>Civil Engineering Department Magazine Reveal</h1>
+    <p class="subtitle">Untie each ribbon knot to unlock the grand reveal.</p>
+
+    <section class="book-wrap" aria-label="Magazine reveal animation">
+      <div id="book" class="book">
+        <div class="book-title">
+          <div>
+            <span>Department of Civil Engineering</span>
+            <strong>Constructing Excellence</strong>
+            <span>Annual Magazine 2026</span>
+          </div>
+        </div>
+
+        <div class="ribbons" id="ribbons">
+          <div class="ribbon v1" data-step="0"></div>
+          <div class="ribbon h1" data-step="1"></div>
+          <div class="ribbon v2" data-step="2"></div>
+          <div class="ribbon h2" data-step="3"></div>
+        </div>
+
+        <button id="seal" class="seal" aria-label="Untie ribbon">
+          MAGAZINE<br/>REVEAL
+        </button>
+      </div>
+      <div class="reveal-glow"></div>
+    </section>
+
+    <div id="status" class="status">Click the golden seal to untie ribbon 1 of 4.</div>
+    <div id="redirect" class="redirect"></div>
+  </main>
+
+  <script>
+    const ribbons = Array.from(document.querySelectorAll('.ribbon'));
+    const seal = document.getElementById('seal');
+    const statusText = document.getElementById('status');
+    const redirectText = document.getElementById('redirect');
+    const book = document.getElementById('book');
+
+    const redirectUrl = 'https://example.com/magazine'; // Replace with your final magazine page URL
+
+    let step = 0;
+    let redirectCountdown = 5;
+
+    function updateStatus() {
+      const remaining = ribbons.length - step;
+      if (remaining > 0) {
+        statusText.textContent = `Click the golden seal to untie ribbon ${step + 1} of ${ribbons.length}.`;
+      }
+    }
+
+    function startRedirectCountdown() {
+      redirectText.classList.add('show');
+      redirectText.textContent = `Grand reveal complete! Redirecting to magazine in ${redirectCountdown}s...`;
+
+      const timer = setInterval(() => {
+        redirectCountdown -= 1;
+        if (redirectCountdown <= 0) {
+          clearInterval(timer);
+          window.location.href = redirectUrl;
+          return;
+        }
+        redirectText.textContent = `Grand reveal complete! Redirecting to magazine in ${redirectCountdown}s...`;
+      }, 1000);
+    }
+
+    seal.addEventListener('click', () => {
+      if (step < ribbons.length) {
+        ribbons[step].classList.add('gone');
+        step += 1;
+        updateStatus();
+      }
+
+      if (step === ribbons.length) {
+        seal.classList.add('fade');
+        statusText.textContent = '✨ The magic cover opens...';
+        book.classList.add('opening');
+        seal.disabled = true;
+
+        setTimeout(() => {
+          statusText.textContent = 'Magazine cover revealed.';
+          startRedirectCountdown();
+        }, 1700);
+      }
+    });
+  </script>
+</body>
+</html>

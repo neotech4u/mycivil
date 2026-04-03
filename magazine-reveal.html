@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Civil Heroes Magazine Reveal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #57c4ff;
+      --gold: #ffc96b;
+      --cyan: #86e8ff;
+      --bg-dark: #020610;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: Inter, sans-serif;
+      color: #ecf5ff;
+      background: #000;
+    }
+
+    .background {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(180deg, rgba(1, 6, 14, 0.45), rgba(1, 6, 14, 0.8)),
+        url('https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=2200&q=80');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.03);
+    }
+
+    .background::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(87, 196, 255, 0.25), transparent 34%),
+        radial-gradient(circle at 86% 18%, rgba(255, 201, 107, 0.18), transparent 36%),
+        radial-gradient(circle at 50% 85%, rgba(134, 232, 255, 0.1), transparent 40%);
+      animation: shimmer 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes shimmer {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+
+    .app {
+      position: relative;
+      z-index: 5;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .stage {
+      width: min(980px, 95vw);
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.4rem, 3vw, 2.3rem);
+      letter-spacing: .08em;
+      margin: 0;
+      text-transform: uppercase;
+      text-shadow: 0 8px 18px rgba(0, 0, 0, 0.55);
+    }
+
+    .tagline {
+      margin: 8px 0 24px;
+      color: #cde4ff;
+      font-size: clamp(.92rem, 1.8vw, 1.05rem);
+    }
+
+    .cinematic-ring {
+      position: absolute;
+      width: min(720px, 90vw);
+      height: min(720px, 90vw);
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(134, 232, 255, 0.28);
+      box-shadow: 0 0 45px rgba(87, 196, 255, 0.35), inset 0 0 40px rgba(255, 201, 107, 0.16);
+      animation: rotate 28s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .book-scene {
+      position: relative;
+      width: min(760px, 92vw);
+      margin: 0 auto;
+      perspective: 1800px;
+    }
+
+    .book {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(145deg, #0f2c53, #173f72 65%, #1f588f);
+      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.65), inset 0 0 0 1px rgba(255, 255, 255, 0.13);
+      transform-style: preserve-3d;
+    }
+
+    .book::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(130deg, rgba(255,255,255,0.14), transparent 45%),
+        radial-gradient(circle at 78% 16%, rgba(134, 232, 255, 0.25), transparent 46%);
+      pointer-events: none;
+    }
+
+    .closed-cover,
+    .revealed-cover {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .closed-cover {
+      z-index: 2;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .closed-cover-card {
+      width: min(520px, 90%);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: linear-gradient(160deg, rgba(6, 14, 30, .6), rgba(20, 58, 92, .5));
+      box-shadow: 0 20px 35px rgba(0,0,0,.35);
+      padding: 26px 22px;
+    }
+
+    .closed-cover strong {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.2rem, 3.7vw, 2.6rem);
+      margin: 7px 0;
+      color: white;
+      text-shadow: 0 8px 16px rgba(0,0,0,.35);
+    }
+
+    .hero-icons {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .icon-chip {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 1.8rem;
+      background: rgba(8, 20, 38, .72);
+      border: 1px solid rgba(255,255,255,.2);
+      color: #b8d7f3;
+      transition: all 500ms ease;
+      filter: saturate(.6);
+      opacity: .65;
+      box-shadow: 0 10px 18px rgba(0,0,0,.4);
+    }
+
+    .icon-chip[data-group="1"]:nth-of-type(1) { left: 8%; top: 20%; }
+    .icon-chip[data-group="1"]:nth-of-type(2) { right: 8%; top: 20%; }
+    .icon-chip[data-group="2"]:nth-of-type(3) { left: 8%; bottom: 18%; }
+    .icon-chip[data-group="2"]:nth-of-type(4) { right: 8%; bottom: 18%; }
+
+    .icon-chip.active {
+      color: white;
+      opacity: 1;
+      filter: saturate(1.2);
+      border-color: rgba(134, 232, 255, .8);
+      box-shadow: 0 0 24px rgba(87, 196, 255, .6), 0 0 42px rgba(255, 201, 107, .28);
+      transform: scale(1.12);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 18px 0 0;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 20px;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      transition: transform .2s ease, box-shadow .3s ease, opacity .3s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      color: #041325;
+      background: linear-gradient(120deg, var(--cyan), var(--blue));
+      box-shadow: 0 8px 18px rgba(87, 196, 255, .35);
+    }
+
+    .btn-secondary {
+      color: #1e1203;
+      background: linear-gradient(120deg, #ffe29c, var(--gold));
+      box-shadow: 0 8px 18px rgba(255, 201, 107, .35);
+    }
+
+    .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+    .revealed-cover {
+      z-index: 1;
+      opacity: 0;
+      transform: scale(.95);
+      transition: opacity 900ms ease, transform 900ms ease;
+      background: #020910;
+    }
+
+    .revealed-cover img {
+      width: min(520px, 92%);
+      max-height: 84%;
+      object-fit: contain;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.3);
+      box-shadow: 0 18px 35px rgba(0,0,0,.55);
+      background: #102438;
+    }
+
+    .book.opening .closed-cover {
+      animation: openCover 1900ms cubic-bezier(.18,.72,.2,1) forwards;
+      transform-origin: left center;
+    }
+
+    .book.opening .revealed-cover {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @keyframes openCover {
+      0% { transform: rotateY(0deg) translateZ(2px); opacity: 1; }
+      45% { transform: rotateY(-115deg) translateX(-18px) translateZ(18px); opacity: .95; }
+      100% { transform: rotateY(-168deg) translateX(-36px) translateZ(18px); opacity: 0; }
+    }
+
+    .status {
+      margin-top: 14px;
+      min-height: 1.4em;
+      font-weight: 600;
+      color: #d8e8ff;
+      text-shadow: 0 4px 10px rgba(0,0,0,.4);
+    }
+
+    .redirect {
+      margin-top: 8px;
+      color: #a0ddff;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: .45s ease;
+      font-weight: 600;
+    }
+
+    .redirect.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="app">
+    <div class="cinematic-ring"></div>
+    <main class="stage">
+      <h1>Civil Heroes Magazine Reveal</h1>
+      <p class="tagline">Buildings, bridges, metro, dams, and water treatment as the heroes of our future.</p>
+
+      <section class="book-scene" aria-label="Magazine reveal sequence">
+        <div class="book" id="book">
+          <div class="closed-cover">
+            <div class="closed-cover-card">
+              <small>Department of Civil Engineering</small>
+              <strong>Constructing Excellence</strong>
+              <small>Cinematic Reveal Sequence</small>
+            </div>
+          </div>
+
+          <div class="hero-icons" id="heroIcons">
+            <div class="icon-chip" data-group="1" title="Iconic Building">🏙️</div>
+            <div class="icon-chip" data-group="1" title="Water Treatment">💧</div>
+            <div class="icon-chip" data-group="2" title="Metro Rail">🚇</div>
+            <div class="icon-chip" data-group="2" title="Dam & Hydraulics">🏞️</div>
+          </div>
+
+          <div class="revealed-cover" id="revealedCover">
+            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80" alt="Civil Engineering Magazine Cover">
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btnSetOne">Activate Building + Water</button>
+        <button class="btn btn-secondary" id="btnSetTwo" disabled>Activate Metro + Dam</button>
+      </div>
+
+      <div class="status" id="status">Press the first button to energize the first hero icons.</div>
+      <div class="redirect" id="redirect"></div>
+    </main>
+  </div>
+
+  <script>
+    const btnSetOne = document.getElementById('btnSetOne');
+    const btnSetTwo = document.getElementById('btnSetTwo');
+    const statusEl = document.getElementById('status');
+    const redirectEl = document.getElementById('redirect');
+    const book = document.getElementById('book');
+
+    const groupOneIcons = [...document.querySelectorAll('.icon-chip[data-group="1"]')];
+    const groupTwoIcons = [...document.querySelectorAll('.icon-chip[data-group="2"]')];
+
+    const redirectUrl = 'https://example.com/magazine'; // Replace with final magazine page URL.
+    let countdown = 6;
+
+    function lightIcons(icons) {
+      icons.forEach((icon, idx) => {
+        setTimeout(() => icon.classList.add('active'), idx * 170);
+      });
+    }
+
+    function startRedirect() {
+      redirectEl.classList.add('show');
+      redirectEl.textContent = `Mission complete. Redirecting in ${countdown}s...`;
+
+      const timer = setInterval(() => {
+        countdown -= 1;
+        if (countdown <= 0) {
+          clearInterval(timer);
+          window.location.href = redirectUrl;
+          return;
+        }
+        redirectEl.textContent = `Mission complete. Redirecting in ${countdown}s...`;
+      }, 1000);
+    }
+
+    btnSetOne.addEventListener('click', () => {
+      lightIcons(groupOneIcons);
+      btnSetOne.disabled = true;
+      btnSetTwo.disabled = false;
+      statusEl.textContent = 'Iconic Building and Water heroes activated. Trigger the second squad.';
+    });
+
+    btnSetTwo.addEventListener('click', () => {
+      lightIcons(groupTwoIcons);
+      btnSetTwo.disabled = true;
+      statusEl.textContent = 'Metro and Dam heroes activated. Opening magazine portal...';
+
+      setTimeout(() => {
+        book.classList.add('opening');
+      }, 500);
+
+      setTimeout(() => {
+        statusEl.textContent = 'Magazine cover revealed.';
+        startRedirect();
+      }, 2200);
+    });
+  </script>
+</body>
+</html>
